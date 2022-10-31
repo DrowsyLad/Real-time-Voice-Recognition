@@ -5,6 +5,11 @@ import librosa
 import warnings
 #warnings.filterwarnings('ignore')
 
+num_mfcc=13
+n_fft=2048
+hop_length=512
+FRAMES_PER_BUFFER = 3200
+
 class AudioHandler(object):
     def __init__(self):
         self.FORMAT = pyaudio.paFloat32
@@ -30,7 +35,7 @@ class AudioHandler(object):
 
     def MFCC(self, in_data):
         numpy_array = np.frombuffer(in_data, dtype=np.float32)
-        MFCCs = librosa.feature.mfcc(numpy_array)
+        MFCCs = librosa.feature.mfcc(numpy_array, self.RATE, n_mfcc=num_mfcc, n_fft=n_fft, hop_length=hop_length)
         print(numpy_array.shape)
         return MFCCs
 
